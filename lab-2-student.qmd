@@ -67,8 +67,8 @@ In the code chunk below, load in the packages necessary for your analysis. You s
 
 ```{r}
 #| label: setup
-library(tidyverse)
-library(here)
+suppressMessages(library(tidyverse))
+
 ```
 
 # Data Context
@@ -107,8 +107,9 @@ represent:
 
 ```{r}
 #| label: load-data
-survey_data <- read_csv('data/surveys.csv')
-dim(survey_data) 
+survey_data <- read_csv('data/surveys.csv', show_col_types = FALSE)
+spec(survey_data) 
+dim(survey_data)
 ```
 
 **2. What are the dimensions (# of rows and columns) of these data?**
@@ -121,7 +122,7 @@ There are 30,463 rows and 15 columns
 
 <!-- You can either write code here or in the code chunk for #1, but I **must** see the code you used to address this question!  --> 
 
-7 columns are double and 7 are character
+7 columns are double, 7 are character, and 1 is a date
 
 # Exploratory Data Analysis with **`ggplot2`**
 
@@ -246,6 +247,7 @@ ggplot(data = survey_data,
        mapping = aes(y = weight, 
                      x = species)) + 
   geom_boxplot(outliers = FALSE) + 
+  geom_jitter(color = 'steelblue', alpha = 0.1) + 
   labs(title = "Rodent Weight by Species",
        x = "Weight (g)",
        y = "") + 
@@ -283,13 +285,14 @@ might want to look up the help documentation for `aov()`.
 ```{r}
 #| label: anova
 
-species_mod <- aov()
+species_mod <- aov(weight ~ species, data = survey_data)
 
 summary(species_mod)
 ```
 
 **18. Based on the results of the ANOVA F-test, draw a conclusion in context of the hypotheses. Make sure to cite appropriate output from above.**
 
+As the p value is less than the significance value of 0.001, we can reject the null hypothesis and conclude that there are statistically significant differences between the different species' mean weight. 
 
 # Lab 2 Submission
 
