@@ -5,6 +5,11 @@ format: html
 editor: source
 embed-resources: true
 code-tools: true
+execute:
+  echo: true
+  output: true
+code-fold: true
+toc: true
 ---
 
 # Part 1: GitHub Workflow
@@ -62,6 +67,7 @@ In the code chunk below, load in the packages necessary for your analysis. You s
 
 ```{r}
 #| label: setup
+library(tidyverse)
 
 ```
 
@@ -101,16 +107,17 @@ represent:
 
 ```{r}
 #| label: load-data
-
+surveys <- read_csv('C:/Users/arbor/Documents/STAT 331/Week 2/Lab 2/lab-2-ZackKramer/data/surveys.csv')
+surveys
 ```
 
 **2. What are the dimensions (# of rows and columns) of these data?**
 
-<!-- You can either write code here or in the code chunk for #1, but I **must** see the code you used to address this question!  -->
+<!-- You can either write code here or in the code chunk for #1, but I **must** see the code you used to address this question!  --> There are 30,463 rows and 15 columns
 
 **3. What are the data types of the variables in this dataset?**
 
-<!-- You can either write code here or in the code chunk for #1, but I **must** see the code you used to address this question!  -->
+<!-- You can either write code here or in the code chunk for #1, but I **must** see the code you used to address this question!  --> 7 columns are double and 7 are character
 
 # Exploratory Data Analysis with **`ggplot2`**
 
