@@ -3,8 +3,6 @@ title: "Challenge 2: Spicing things up with ggplot2"
 author: "Zack Kramer"
 format: html
 editor: source
-  markdown: 
-    wrap: 72
 embed-resources: true
 code-tools: true
 execute:
@@ -13,6 +11,7 @@ execute:
 code-fold: true
 toc: true
 self-contained: true
+message: false
 ---
 
 For this week's Challenge, you will have three different options to explore. I've arranged these options in terms of their "spiciness," or the difficulty of completing the task. **You are only required to complete one task, but if you are interested in exploring more than one, feel free!**
@@ -35,13 +34,13 @@ survey_data <- read_csv('data/surveys.csv', show_col_types = FALSE)
 Finally, create another code chunk and paste in your code from Question 14 or Question 15 in Lab 2 -- we will be modifying the box plot of weights by species!
 
 ```{r}
-#| label: boxplot
+#| label: boxplot-copy
 
 ggplot(data = survey_data,
        mapping = aes(x = weight, y = species)) + 
   geom_boxplot(outliers = FALSE) + 
   geom_jitter(color = 'steelblue', alpha = 0.1) + 
-  labs(title = "Rodent Weight by Species",
+  labs(title = "Rodent Weight Distribution by Species",
        x = "Weight (g)",
        y = "")
 
@@ -65,8 +64,23 @@ ggplot(data = survey_data,
        mapping = aes(x = weight, 
                      y = species)) + 
   geom_density_ridges(aes(color = genus)) +
-  scale_colour_brewer("Genus", palette = "Set1") +
-  labs(title = "Distribution of Rodent Weight by Species",
+  scale_colour_brewer(palette = "Set1") +
+  annotate("text", y = 1:14, x = 270, label = c("Neomota",
+                                                "Chaetodipus",
+                                                "Peromyscus",
+                                                "Perognathus",
+                                                "Reithrodontomys",
+                                                "Sigmodon",
+                                                "Onychomys",
+                                                "Peromyscus",
+                                                "Reithrodontomys",
+                                                "Dipodomys",
+                                                "Dipodomys",
+                                                "Chaetodipus",
+                                                "Dipodomys",
+                                                "Onychromys")) +
+  theme(legend.position = "none") +
+  labs(title = "Rodent Weight Distribution by Species",
        x = "Weight (g)",
        y = "")
 
@@ -105,7 +119,7 @@ If you are interested in using specific hex colors, I like the [image color pick
 
 ```{r}
 #| include: false
-surveys |> 
+survey_data |> 
   ggplot(aes(x = weight, y = species, color = genus)) +
   geom_boxplot() +
   scale_color_manual(values = cdPalette_grey) +
@@ -135,7 +149,22 @@ ggplot(data = survey_data,
        mapping = aes(x = weight, y = species)) + 
   geom_boxplot(aes(color = genus),
                outliers = FALSE) + 
-  scale_colour_brewer("Genus", palette = "Set1") +
+  scale_colour_brewer(palette = "Set1") +
+  annotate("text", y = 1:14, x = 250, label = c("Neomota",
+                                                "Chaetodipus",
+                                                "Peromyscus",
+                                                "Perognathus",
+                                                "Reithrodontomys",
+                                                "Sigmodon",
+                                                "Onychomys",
+                                                "Peromyscus",
+                                                "Reithrodontomys",
+                                                "Dipodomys",
+                                                "Dipodomys",
+                                                "Chaetodipus",
+                                                "Dipodomys",
+                                                "Onychromys")) +
+  theme(legend.position = "none") +
   labs(title = "Rodent Weight Distribution by Species",
        x = "Weight (g)",
        y = "")
@@ -152,7 +181,7 @@ We can add annotation(s) to a `ggplot()` using the `annotate()` function:
 #| echo: true
 #| label: example-annotation
 
-ggplot(data = surveys, 
+ggplot(data = survey_data, 
        mapping = aes(y = species,
                      x = weight,
                      color = genus)) +
