@@ -59,10 +59,14 @@ A "superior" alternative is the density plot. However, `ggplot2` does not allow 
 #| label: ridge-plots
 
 library(ggridges)
-ggplot(data = survey_data,
-       mapping = aes(x = weight, y = species)) + 
-  geom_density_ridges() +
-  labs(title = "Frequency of Rodent Weight by Species",
+library(RColorBrewer)
+
+ggplot(data = survey_data, 
+       mapping = aes(x = weight, 
+                     y = species)) + 
+  geom_density_ridges(aes(color = genus)) +
+  scale_colour_brewer("Genus", palette = "Set1") +
+  labs(title = "Distribution of Rodent Weight by Species",
        x = "Weight (g)",
        y = "")
 
@@ -82,7 +86,7 @@ Add the `scale_color_manual()` or `scale_fill_manual()` functions to your plot a
 
 2.  create a vector of colors using hex numbers and store that vector as a variable. Then, call that vector in the `scale_color_manual()` function.
 
-Here are some exaplme hex color schemes:
+Here are some example hex color schemes:
 
 ```{r}
 #| echo: true
@@ -123,6 +127,20 @@ While manual specification may be necessary for some contexts, it can be a real 
 :::
 
 > **In this challenge you are expected to use this information to modify the boxplots you created Lab 2. First, you are to color the boxplots based on the variable `genus`. Next, you are to change the colors used for `genus` using either manual color specification or any of the packages listed here (or others!).**
+
+```{r}
+#| label: boxplot
+
+ggplot(data = survey_data,
+       mapping = aes(x = weight, y = species)) + 
+  geom_boxplot(aes(color = genus),
+               outliers = FALSE) + 
+  scale_colour_brewer("Genus", palette = "Set1") +
+  labs(title = "Rodent Weight Distribution by Species",
+       x = "Weight (g)",
+       y = "")
+```
+
 
 # Hot: Exploring `ggplot2` Annotation
 
